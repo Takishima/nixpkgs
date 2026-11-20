@@ -190,6 +190,11 @@ stdenv.mkDerivation (finalAttrs: {
       runHook postInstallCheck
     '';
 
+  postFixup = ''
+    moveToOutput "lib/*.a" "$dev"
+    sed -i "s|$lib/lib/\(lib[[:alnum:]_]*\.a\)|$dev/lib/\1|g" "$dev"/lib/cmake/DuckDB/*.cmake
+  '';
+
   passthru.updateScript = ./update.sh;
   passthru.pythonHash = versions.python_hash;
 
