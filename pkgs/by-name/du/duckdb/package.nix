@@ -65,6 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
     "out"
     "lib"
     "dev"
+    "static"
   ];
 
   nativeBuildInputs = [
@@ -191,8 +192,8 @@ stdenv.mkDerivation (finalAttrs: {
     '';
 
   postFixup = ''
-    moveToOutput "lib/*.a" "$dev"
-    sed -i "s|$lib/lib/\(lib[[:alnum:]_]*\.a\)|$dev/lib/\1|g" "$dev"/lib/cmake/DuckDB/*.cmake
+    moveToOutput "lib/*.a" "$static"
+    sed -i "s|$lib/lib/\(lib[[:alnum:]_]*\.a\)|$static/lib/\1|g" "$dev"/lib/cmake/DuckDB/*.cmake
   '';
 
   passthru.updateScript = ./update.sh;
